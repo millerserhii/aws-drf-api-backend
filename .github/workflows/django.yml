@@ -16,21 +16,21 @@ jobs:
         python-version: [3.11, 3.12]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Poetry
-      run: |
-        curl -sSL https://install.python-poetry.org | python -
-        export PATH="$HOME/.poetry/bin:$PATH"
-        poetry config virtualenvs.create false
-    - name: Install dependencies
-      run: |
-        export PATH="$HOME/.poetry/bin:$PATH"
-        poetry install
-    - name: Run Tests
-      run: |
-        export PATH="$HOME/.poetry/bin:$PATH"
-        poetry run python manage.py test
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python -
+          export PATH="$HOME/.poetry/bin:$PATH"
+          poetry config virtualenvs.create false
+      - name: Install dependencies
+        run: |
+          export PATH="$HOME/.poetry/bin:$PATH"
+          poetry install
+      - name: Run Tests
+        run: |
+          export PATH="$HOME/.poetry/bin:$PATH"
+          poetry run pytest
