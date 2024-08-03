@@ -1,4 +1,4 @@
-name: mypy CI
+name: mypy & pylint CI
 
 on:
   push:
@@ -33,4 +33,9 @@ jobs:
       - name: Run Mypy
         run: |
           export PATH="$HOME/.poetry/bin:$PATH"
-          poetry run mypy .
+          poetry run mypy src
+
+      - name: Run Pylint
+        run: |
+          export PATH="$HOME/.poetry/bin:$PATH"
+          poetry run pylint src
