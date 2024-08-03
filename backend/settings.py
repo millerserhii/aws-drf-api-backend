@@ -9,9 +9,6 @@ from django.utils.encoding import force_str
 from utils.logger_settings import get_logger_settings
 
 
-# TODO: Add rate limitting via Django-Ratelimit
-
-
 class Base(Configuration):
 
     django.utils.encoding.force_text = force_str
@@ -97,7 +94,7 @@ class Base(Configuration):
         # third party
         "rest_framework",
         "rest_framework.authtoken",
-        "drf_yasg",
+        "drf_spectacular",
         "corsheaders",
         "djoser",
         "django_filters",
@@ -149,7 +146,14 @@ class Base(Configuration):
         "DEFAULT_FILTER_BACKENDS": [
             "django_filters.rest_framework.DjangoFilterBackend"
         ],
-        "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+        "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    }
+
+    SPECTACULAR_SETTINGS = {
+        "TITLE": "Backend API",
+        "DESCRIPTION": "Boilerplate for Django REST API",
+        "VERSION": "1.0.0",
+        "SERVE_INCLUDE_SCHEMA": False,
     }
 
     if not DEBUG:
