@@ -20,7 +20,7 @@ resource "aws_lb_listener" "http" {
 
 resource "aws_lb_target_group" "ecs-target-group" {
   name     = "example-target-group"
-  port     = 3000
+  port     = 8000
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default_vpc.id
   target_type = "ip"
