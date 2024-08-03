@@ -8,7 +8,7 @@ from .conftest import ConcreteBase
 def test_save_sets_timestamp(base_instance: ConcreteBase) -> None:
     """Test that the save method sets the timestamp properly."""
     # Initial state
-    base_instance.timestamp = None  # type: ignore[assignment]
+    base_instance.timestamp = None
     with patch("django.db.models.Model.save", return_value=None):
         base_instance.save()
 

@@ -106,7 +106,7 @@ DJANGO_SETTINGS_MODULE = "backend.settings"
 DJANGO_CONFIGURATION = "Base"
 minversion = "6.0"
 addopts = "-ra -q --disable-warnings"
-pythonpath = "."
+pythonpath = "src"
 
 
 [tool.coverage.run]
