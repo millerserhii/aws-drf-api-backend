@@ -36,6 +36,7 @@ jobs:
   terraform_plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
+    environment: Staging
     needs: setup
     steps:
         - name: Checkout code
@@ -58,6 +59,7 @@ jobs:
     name: Terraform Apply
     runs-on: ubuntu-latest
     needs: terraform_plan
+    environment: Staging
     if: github.event_name == 'push'
     steps:
         - name: Checkout code
@@ -79,6 +81,7 @@ jobs:
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
+    environment: Staging
     needs: [setup, terraform_apply]
     steps:
       - name: Checkout code
