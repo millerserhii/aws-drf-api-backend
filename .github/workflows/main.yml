@@ -44,16 +44,16 @@ jobs:
 
         - name: Add terraform.tfvars
           run: |
-            echo RDS_DB_NAME="${{ secrets.RDS_DB_NAME }}" >> $TF_ROOT/terraform.tfvars
-            echo RDS_HOSTNAME="${{ secrets.RDS_HOSTNAME }}" >> $TF_ROOT/terraform.tfvars
-            echo RDS_PASSWORD="${{ secrets.RDS_PASSWORD }}" >> $TF_ROOT/terraform.tfvars
-            echo RDS_PORT="${{ secrets.RDS_PORT }}" >> $TF_ROOT/terraform.tfvars
-            echo RDS_USERNAME="${{ secrets.RDS_USERNAME }}" >> $TF_ROOT/terraform.tfvars
-            echo REDIS_ENDPOINT="${{ secrets.REDIS_ENDPOINT }}" >> $TF_ROOT/terraform.tfvars
-            echo REDIS_PASSWORD="${{ secrets.REDIS_PASSWORD }}" >> $TF_ROOT/terraform.tfvars
-            echo REDIS_USER="${{ secrets.REDIS_USER }}" >> $TF_ROOT/terraform.tfvars
-            echo ECR_REGISTRY="${{ secrets.ECR_REGISTRY }}" >> $TF_ROOT/terraform.tfvars
-            echo ECR_REPOSITORY="${{ secrets.ECR_REPOSITORY }}" >> $TF_ROOT/terraform.tfvars
+            echo 'rds_db_name = "${{ secrets.RDS_DB_NAME }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'rds_hostname = "${{ secrets.RDS_HOSTNAME }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'rds_password = "${{ secrets.RDS_PASSWORD }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'rds_port = "${{ secrets.RDS_PORT }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'rds_username = "${{ secrets.RDS_USERNAME }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'redis_endpoint = "${{ secrets.REDIS_ENDPOINT }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'redis_password = "${{ secrets.REDIS_PASSWORD }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'redis_user = "${{ secrets.REDIS_USER }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'ecr_registry = "${{ secrets.ECR_REGISTRY }}"' >> $TF_ROOT/terraform.tfvars
+            echo 'ecr_repository = "${{ secrets.ECR_REPOSITORY }}"' >> $TF_ROOT/terraform.tfvars
         - name: Set up AWS CLI
           uses: aws-actions/configure-aws-credentials@v1
           with:
