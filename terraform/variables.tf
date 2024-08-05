@@ -8,3 +8,20 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+variable "AWS_DEFAULT_REGION" {
+  description = "The AWS region to deploy to"
+  type        = string
+  default     = "eu-central-1"
+}
+
+
+variable "AWS_ACCESS_KEY_ID" {
+  description = "The AWS access key ID"
+  type        = string
+}
+
+variable "AWS_SECRET_ACCESS_KEY" {
+  description = "The AWS access key ID"
+  type        = string
+}

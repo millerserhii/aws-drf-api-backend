@@ -226,16 +226,21 @@ class Base(Configuration):
 
 
 class Dev(Base):
-    DATABASES = values.DatabaseURLValue(
-        f"postgres://{os.environ.get('POSTGRES_USER', 'postgres')}"
-        f":{os.environ.get('POSTGRES_PASSWORD', 'password')}"
-        f"@{os.environ.get('POSTGRES_HOST', 'db')}"
-        f":5432/{os.environ.get('POSTGRES_DB', 'postgres')}"
-    )
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("RDS_DB_NAME", "postgres"),
+            "USER": os.environ.get("RDS_USERNAME", "postgres"),
+            "PASSWORD": os.environ.get("RDS_PASSWORD", "password"),
+            "HOST": os.environ.get("RDS_HOSTNAME", "your-db-endpoint"),
+            "PORT": os.environ.get("RDS_PORT", "5432"),
+        }
+    }
+
     CACHE_CONN_STRING = (
-        f"redis://default"
-        f":{os.environ.get('REDIS_PASSWORD', 'password')}"
-        f"@{os.environ.get('REDIS_HOST', 'redis')}:6379/0"
+        f"redis://{os.environ.get('REDIS_USER', 'default')}"
+        f":{os.environ.get('REDIS_PASSWORD', '')}"
+        f"@{os.environ.get('REDIS_ENDPOINT', 'redis')}:6379/0"
     )
     CACHES = {
         "default": {
@@ -254,7 +259,6 @@ class Dev(Base):
             ),
         },
     }
-    CELERY_BROKER_URL = CACHE_CONN_STRING
 
 
 class Staging(Dev):
@@ -268,3 +272,4 @@ class Staging(Dev):
     ]
     CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
     SECURE_SSL_HOST = ALLOWED_HOSTS[0]
+    MIDDLEWARE = Base.MIDDLEWARE[1:]
