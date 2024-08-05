@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "webapp_task" {
 
   container_definitions = jsonencode([{
     name  = "webapp-container",
-    image = "public.ecr.aws/g9x5w2d4/pure-ts-public:latest"
+    image = "${var.ECR_REPOSITORY}:latest",
     portMappings = [{
       containerPort = var.APP_CONTAINER_PORT,
       hostPort      = var.APP_HOST_PORT

@@ -31,3 +31,9 @@ variable "APP_HOST_PORT" {
   type        = number
   default     = 8000
 }
+
+variable "ECR_REPOSITORY" {
+  description = "The Docker image to use for the app container"
+  type        = string
+  default     = "aws-drf-boilerplate"
+}
