@@ -30,6 +30,6 @@ jobs:
 
       - name: Terraform Apply
         env:
-          TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
-          TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+          TF_VAR_RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+          TF_VAR_RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
         run: terraform apply -auto-approve

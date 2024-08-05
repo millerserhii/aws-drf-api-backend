@@ -13,7 +13,7 @@ base_prefix = "api/v1/"
 
 urlpatterns = [
     # Base endpoints
-    path("api/ping/", ping, name="ping"),
+    path("ping/", ping, name="ping"),
     path("admin/", admin.site.urls),
     # Schemas
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),

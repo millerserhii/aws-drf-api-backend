@@ -10,8 +10,8 @@ resource "aws_ecs_task_definition" "webapp_task" {
     name  = "webapp-container",
     image = "public.ecr.aws/g9x5w2d4/pure-ts-public:latest"
     portMappings = [{
-      containerPort = 8000,
-      hostPort      = 8000
+      containerPort = var.APP_CONTAINER_PORT,
+      hostPort      = var.APP_HOST_PORT
     }]
   }])
 }
@@ -29,7 +29,7 @@ resource "aws_ecs_service" "webapp_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs-target-group.arn
     container_name   = "webapp-container"
-    container_port   = 8000
+    container_port   = var.APP_CONTAINER_PORT
   }
 
   desired_count = 1

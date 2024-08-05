@@ -4,8 +4,8 @@ resource "aws_db_instance" "webapp_postgres_db" {
   engine                     = "postgres"
   engine_version             = "14"
   instance_class             = "db.t2.micro"
-  username                   = var.db_username
-  password                   = var.db_password
+  username                   = var.RDS_USERNAME
+  password                   = var.RDS_PASSWORD
   skip_final_snapshot        = true
   allocated_storage          = 20
 }

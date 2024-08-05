@@ -165,7 +165,7 @@ celerybeat.pid
 
 # Environments
 .env
-.env.*
+.env.local
 .venv
 env/
 venv/
@@ -208,3 +208,9 @@ node_modules/
 # Backups
 backups
 data
+
+# Terraform
+.terraform/
+.tfstate
+*.tfstate
+.terraform.*
