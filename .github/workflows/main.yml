@@ -41,6 +41,19 @@ jobs:
     steps:
         - name: Checkout code
           uses: actions/checkout@v2
+
+        - name: Add terraform.tfvars
+          run: |
+            echo RDS_DB_NAME=${{ secrets.RDS_DB_NAME }} >> terraform.tfvars
+            echo RDS_HOSTNAME=${{ secrets.RDS_HOSTNAME }} >> terraform.tfvars
+            echo RDS_PASSWORD=${{ secrets.RDS_PASSWORD }} >> terraform.tfvars
+            echo RDS_PORT=${{ secrets.RDS_PORT }} >> terraform.tfvars
+            echo RDS_USERNAME=${{ secrets.RDS_USERNAME }} >> terraform.tfvars
+            echo REDIS_ENDPOINT=${{ secrets.REDIS_ENDPOINT }} >> terraform.tfvars
+            echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> terraform.tfvars
+            echo REDIS_USER=${{ secrets.REDIS_USER }} >> terraform.tfvars
+            echo ECR_REGISTRY=${{ secrets.ECR_REGISTRY }} >> terraform.tfvars
+            echo ECR_REPOSITORY=${{ secrets.ECR_REPOSITORY }} >> terraform.tfvars
         - name: Set up AWS CLI
           uses: aws-actions/configure-aws-credentials@v1
           with:
@@ -105,6 +118,8 @@ jobs:
           echo REDIS_ENDPOINT=${{ secrets.REDIS_ENDPOINT }} >> .env
           echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> .env
           echo REDIS_USER=${{ secrets.REDIS_USER }} >> .env
+          echo ECR_REGISTRY=${{ secrets.ECR_REGISTRY }} >> .env
+          echo ECR_REPOSITORY=${{ secrets.ECR_REPOSITORY }} >> .env
       - name: Build and Push Docker Image
         run: |
           docker build -t $ECR_REPOSITORY .
