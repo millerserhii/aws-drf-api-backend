@@ -37,3 +37,27 @@ variable "ECR_REPOSITORY" {
   type        = string
   default     = "aws-drf-boilerplate"
 }
+
+variable "CONTAINER_NAME" {
+  description = "The name of the container"
+  type        = string
+  default     = "webapp-container"
+}
+
+variable "SERVICE_NAME" {
+  description = "The name of the ECS service"
+  type        = string
+  default     = "webapp-service"
+}
+
+variable "CLUSTER_NAME" {
+  description = "The name of the ECS cluster"
+  type        = string
+  default     = "webapp-ecs-cluster"
+}
+
+variable "TASK_FAMILY" {
+  description = "The family name of the ECS task"
+  type        = string
+  default     = "webapp-task"
+}
