@@ -36,6 +36,22 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
 
+      - name: Create .env file
+        run: |
+          echo DJANGO_CONFIGURATION=${{ vars.DJANGO_CONFIGURATION }} >> .env
+          echo DJANGO_SETTINGS_MODULE=${{ vars.DJANGO_SETTINGS_MODULE }} >> .env
+          echo DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} >> .env
+          echo RDS_DB_NAME=${{ secrets.RDS_DB_NAME }} >> .env
+          echo RDS_HOSTNAME=${{ secrets.RDS_HOSTNAME }} >> .env
+          echo RDS_PASSWORD=${{ secrets.RDS_PASSWORD }} >> .env
+          echo RDS_PORT=${{ secrets.RDS_PORT }} >> .env
+          echo RDS_USERNAME=${{ secrets.RDS_USERNAME }} >> .env
+          echo REDIS_ENDPOINT=${{ secrets.REDIS_ENDPOINT }} >> .env
+          echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> .env
+          echo REDIS_USER=${{ secrets.REDIS_USER }} >> .env
+          echo ECR_REGISTRY=${{ secrets.ECR_REGISTRY }} >> .env
+          echo ECR_REPOSITORY=${{ secrets.ECR_REPOSITORY }} >> .env
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
