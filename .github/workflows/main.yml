@@ -33,69 +33,69 @@ jobs:
         run: |
           echo "Run SAST analysis"
 
-  terraform_plan:
-    name: Terraform Plan
-    runs-on: ubuntu-latest
-    environment: Staging
-    needs: setup
-    steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
+#   terraform_plan:
+#     name: Terraform Plan
+#     runs-on: ubuntu-latest
+#     environment: Staging
+#     needs: setup
+#     steps:
+#         - name: Checkout code
+#           uses: actions/checkout@v2
 
-        - name: Add terraform.tfvars
-          run: |
-            echo 'rds_db_name = "${{ secrets.RDS_DB_NAME }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'rds_hostname = "${{ secrets.RDS_HOSTNAME }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'rds_password = "${{ secrets.RDS_PASSWORD }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'rds_port = "${{ secrets.RDS_PORT }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'rds_username = "${{ secrets.RDS_USERNAME }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'redis_endpoint = "${{ secrets.REDIS_ENDPOINT }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'redis_password = "${{ secrets.REDIS_PASSWORD }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'redis_user = "${{ secrets.REDIS_USER }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'ecr_registry = "${{ secrets.ECR_REGISTRY }}"' >> $TF_ROOT/terraform.tfvars
-            echo 'ecr_repository = "${{ secrets.ECR_REPOSITORY }}"' >> $TF_ROOT/terraform.tfvars
-        - name: Set up AWS CLI
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ${{ secrets.AWS_REGION }}
-        - name: Install Terraform
-          uses: hashicorp/setup-terraform@v1
-        - name: Terraform Init and Plan
-          run: |
-            cd $TF_ROOT
-            terraform init
-            terraform plan
+#         - name: Add terraform.tfvars
+#           run: |
+#             echo 'rds_db_name = "${{ secrets.RDS_DB_NAME }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'rds_hostname = "${{ secrets.RDS_HOSTNAME }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'rds_password = "${{ secrets.RDS_PASSWORD }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'rds_port = "${{ secrets.RDS_PORT }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'rds_username = "${{ secrets.RDS_USERNAME }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'redis_endpoint = "${{ secrets.REDIS_ENDPOINT }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'redis_password = "${{ secrets.REDIS_PASSWORD }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'redis_user = "${{ secrets.REDIS_USER }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'ecr_registry = "${{ secrets.ECR_REGISTRY }}"' >> $TF_ROOT/terraform.tfvars
+#             echo 'ecr_repository = "${{ secrets.ECR_REPOSITORY }}"' >> $TF_ROOT/terraform.tfvars
+#         - name: Set up AWS CLI
+#           uses: aws-actions/configure-aws-credentials@v1
+#           with:
+#             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#             aws-region: ${{ secrets.AWS_REGION }}
+#         - name: Install Terraform
+#           uses: hashicorp/setup-terraform@v1
+#         - name: Terraform Init and Plan
+#           run: |
+#             cd $TF_ROOT
+#             terraform init
+#             terraform plan
 
-  terraform_apply:
-    name: Terraform Apply
-    runs-on: ubuntu-latest
-    needs: terraform_plan
-    environment: Staging
-    if: github.event_name == 'push'
-    steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
-        - name: Set up AWS CLI
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ${{ secrets.AWS_REGION }}
-        - name: Install Terraform
-          uses: hashicorp/setup-terraform@v1
-        - name: Terraform Init and Apply
-          run: |
-            cd $TF_ROOT
-            terraform init
-            terraform apply -auto-approve
+#   terraform_apply:
+#     name: Terraform Apply
+#     runs-on: ubuntu-latest
+#     needs: terraform_plan
+#     environment: Staging
+#     if: github.event_name == 'push'
+#     steps:
+#         - name: Checkout code
+#           uses: actions/checkout@v2
+#         - name: Set up AWS CLI
+#           uses: aws-actions/configure-aws-credentials@v1
+#           with:
+#             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#             aws-region: ${{ secrets.AWS_REGION }}
+#         - name: Install Terraform
+#           uses: hashicorp/setup-terraform@v1
+#         - name: Terraform Init and Apply
+#           run: |
+#             cd $TF_ROOT
+#             terraform init
+#             terraform apply -auto-approve
 
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
     environment: Staging
-    needs: [setup, terraform_apply]
+    needs: [setup]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
