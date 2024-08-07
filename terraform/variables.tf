@@ -61,3 +61,9 @@ variable "TASK_FAMILY" {
   type        = string
   default     = "webapp-task"
 }
+
+variable "ECR_REGISTRY" {
+  description = "The ECR registry URL"
+  type        = string
+  default     = "216728320756.dkr.ecr.eu-central-1.amazonaws.com"
+}

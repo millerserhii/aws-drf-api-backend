@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "webapp_task" {
-  family                   = "webapp-task"
+  family                   = var.TASK_FAMILY
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "webapp_task" {
 
   container_definitions = jsonencode([{
     name  = var.CONTAINER_NAME,
-    image = "${var.ECR_REPOSITORY}:latest",
+    image = "${var.ECR_REGISTRY}/${var.ECR_REPOSITORY}:latest",
     portMappings = [{
       containerPort = var.APP_CONTAINER_PORT,
       hostPort      = var.APP_HOST_PORT
