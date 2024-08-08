@@ -17,35 +17,6 @@ resource "aws_cloudwatch_log_group" "log-group" {
 
 resource "aws_ecs_task_definition" "aws-ecs-task" {
   family = "${var.app_name}-task"
-
-  container_definitions = <<DEFINITION
-  [
-    {
-      "name": "${var.app_name}-${var.app_environment}-container",
-      "image": "${aws_ecr_repository.aws-ecr.repository_url}:latest",
-      "entryPoint": [],
-      "essential": true,
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
-          "awslogs-region": "${var.aws_region}",
-          "awslogs-stream-prefix": "${var.app_name}-${var.app_environment}"
-        }
-      },
-      "portMappings": [
-        {
-          "containerPort": 8000,
-          "hostPort": 8000
-        }
-      ],
-      "cpu": 256,
-      "memory": 512,
-      "networkMode": "awsvpc"
-    }
-  ]
-  DEFINITION
-
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   memory                   = "512"
@@ -57,6 +28,22 @@ resource "aws_ecs_task_definition" "aws-ecs-task" {
     Name        = "${var.app_name}-ecs-td"
     Environment = var.app_environment
   }
+  container_definitions = jsonencode([{
+    name  = "${var.app_name}-${var.app_environment}-container",
+    image = "${aws_ecr_repository.aws-ecr.repository_url}:latest",
+    logConfiguration = {
+        logDriver = "awslogs",
+        options = {
+          awslogs-group = "${aws_cloudwatch_log_group.log-group.id}",
+          awslogs-region = "${var.aws_region}",
+          awslogs-stream-prefix = "${var.app_name}-${var.app_environment}"
+        }
+      },
+    portMappings = [{
+      containerPort = var.APP_CONTAINER_PORT,
+      hostPort      = var.APP_HOST_PORT
+    }]
+  }])
 }
 
 data "aws_ecs_task_definition" "main" {
@@ -84,7 +71,7 @@ resource "aws_ecs_service" "aws-ecs-service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group.arn
     container_name   = "${var.app_name}-${var.app_environment}-container"
-    container_port   = 8000
+    container_port   = var.APP_CONTAINER_PORT
   }
 
   depends_on = [aws_lb_listener.listener]

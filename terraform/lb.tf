@@ -16,7 +16,7 @@ resource "aws_security_group" "load_balancer_security_group" {
 
   ingress {
     from_port        = 80
-    to_port          = 80
+    to_port          = var.APP_HOST_PORT
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]

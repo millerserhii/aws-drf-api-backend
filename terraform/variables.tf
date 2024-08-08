@@ -52,3 +52,15 @@ variable "availability_zones" {
   description = "List of availability zones"
   default     = ["eu-central-1a", "eu-central-1b"]
 }
+
+variable "APP_CONTAINER_PORT" {
+  description = "The port on which the app container listens"
+  type        = number
+  default     = 8000
+}
+
+variable "APP_HOST_PORT" {
+  description = "The port on which the app host listens"
+  type        = number
+  default     = 8000
+}
