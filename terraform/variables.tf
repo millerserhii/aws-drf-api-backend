@@ -1,3 +1,9 @@
+variable "aws_region" {
+  type        = string
+  description = "AWS Region"
+  default     = "eu-central-1"
+}
+
 variable "RDS_USERNAME" {
   description = "The username for the RDS instance"
   type        = string
@@ -9,61 +15,40 @@ variable "RDS_PASSWORD" {
   sensitive   = true
 }
 
-variable "REDIS_USER" {
-  description = "The username for the Redis instance"
-  type        = string
-}
-
-variable "REDIS_PASSWORD" {
-  description = "The password for the Redis instance"
-  type        = string
-  sensitive   = true
-}
-
-variable "APP_CONTAINER_PORT" {
-  description = "The port on which the app container listens"
+variable "aws_cloudwatch_retention_in_days" {
   type        = number
-  default     = 8000
+  description = "AWS CloudWatch Logs Retention in Days"
+  default     = 7
 }
 
-variable "APP_HOST_PORT" {
-  description = "The port on which the app host listens"
-  type        = number
-  default     = 8000
-}
-
-variable "ECR_REPOSITORY" {
-  description = "The Docker image to use for the app container"
+variable "app_name" {
   type        = string
-  default     = "aws-drf-boilerplate"
+  description = "aws-drf-boilerplate"
 }
 
-variable "CONTAINER_NAME" {
-  description = "The name of the container"
+variable "app_environment" {
   type        = string
-  default     = "webapp-container"
+  description = "default environment"
+  default     = "staging"
 }
 
-variable "SERVICE_NAME" {
-  description = "The name of the ECS service"
-  type        = string
-  default     = "webapp-service"
+variable "cidr" {
+  description = "The CIDR block for the VPC."
+  default     = "10.0.0.0/16"
 }
 
-variable "CLUSTER_NAME" {
-  description = "The name of the ECS cluster"
-  type        = string
-  default     = "webapp-ecs-cluster"
+variable "public_subnets" {
+  type        = list(string)
+  description = "List of public subnets"
 }
 
-variable "TASK_FAMILY" {
-  description = "The family name of the ECS task"
-  type        = string
-  default     = "webapp-task"
+variable "private_subnets" {
+  type        = list(string)
+  description = "List of private subnets"
 }
 
-variable "ECR_REGISTRY" {
-  description = "The ECR registry URL"
-  type        = string
-  default     = "216728320756.dkr.ecr.eu-central-1.amazonaws.com"
+variable "availability_zones" {
+  type        = list(string)
+  description = "List of availability zones"
+  default     = ["eu-central-1a", "eu-central-1b"]
 }
