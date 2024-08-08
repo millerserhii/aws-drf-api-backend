@@ -266,10 +266,11 @@ class Staging(Dev):
     DEBUG = values.BooleanValue(False)
     SECURE_SSL_REDIRECT = values.BooleanValue(True)
 
-    ALLOWED_HOSTS = ["api.some-stage-url.com"]
+    ALLOWED_HOSTS = ["staging-api.sergej-mueller.com"]
     CORS_ALLOWED_ORIGINS = [
-        "https://dashboard.some-stage-url.com",
+        "http://staging-dashboard.sergej-mueller.com",
+        "http://localhost:5173",
     ]
     CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
-    SECURE_SSL_HOST = ALLOWED_HOSTS[0]
+    # SECURE_SSL_HOST = ALLOWED_HOSTS[0]
     MIDDLEWARE = Base.MIDDLEWARE[1:]
