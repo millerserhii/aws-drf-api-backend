@@ -75,8 +75,8 @@ class Base(Configuration):
 
     EMAIL = values.EmailURLValue("console://")
     EMAIL_USE_LOCALTIME = True
-    DEFAULT_FROM_EMAIL = "Versus Network"
-    SERVER_EMAIL = "Versus Network"
+    DEFAULT_FROM_EMAIL = "AWS DRF Boilerplate"
+    SERVER_EMAIL = "AWS DRF Boilerplate"
     ADMINS = [
         ("Sergej Müller", "millerserhii@gmail.com"),
     ]
@@ -111,6 +111,7 @@ class Base(Configuration):
 
     MIDDLEWARE = [
         "kolo.middleware.KoloMiddleware",
+        "allow_cidr.middleware.AllowCIDRMiddleware",
         "django.middleware.security.SecurityMiddleware",
         "whitenoise.middleware.WhiteNoiseMiddleware",
         "django.contrib.sessions.middleware.SessionMiddleware",
@@ -265,8 +266,11 @@ class Staging(Dev):
     SECRET_KEY = values.SecretValue()
     DEBUG = values.BooleanValue(False)
     SECURE_SSL_REDIRECT = values.BooleanValue(True)
+    ALLOWED_CIDR_NETS = ["10.10.0.0/24", "10.10.1.0/24"]
 
-    ALLOWED_HOSTS = ["staging-api.sergej-mueller.com"]
+    ALLOWED_HOSTS = [
+        "staging-api.sergej-mueller.com",
+    ]
     CORS_ALLOWED_ORIGINS = [
         "http://staging-dashboard.sergej-mueller.com",
         "http://localhost:5173",

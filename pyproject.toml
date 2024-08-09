@@ -28,6 +28,7 @@ django-configurations = { version = "^2.5.1", extras = [
 django-health-check = "^3.18.3"
 psutil = "^6.0.0"
 drf-spectacular = "^0.27.2"
+django-allow-cidr = "^0.7.1"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -579,6 +579,21 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-allow-cidr"
+version = "0.7.1"
+description = "A Django Middleware to enable use of CIDR IP ranges in ALLOWED_HOSTS."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-allow-cidr-0.7.1.tar.gz", hash = "sha256:382c5d7a9807279e3e96e4f4892b59163a2b30128c596902bf5f80e133e1ccbb"},
+    {file = "django_allow_cidr-0.7.1-py2.py3-none-any.whl", hash = "sha256:11126c5bb9df3a61ff9d97304856ba7e5b26d46c6d456709a6d9e28483bff47f"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+packaging = "*"
+
+[[package]]
 name = "django-cache-url"
 version = "3.4.5"
 description = "Use Cache URLs in your Django application."
@@ -2227,4 +2242,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "92b6fcffd85da8f09891be3030327b6c5ec2015f53aa466e7a36b5694d593dae"
+content-hash = "bc73683e390602b33252fa4a6d2fa4a725ca647ac6ec0386553ef03f0e00e0b4"
