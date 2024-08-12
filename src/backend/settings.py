@@ -51,7 +51,6 @@ class Base(Configuration):
     DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
     DEFAULT_PAGE_SIZE = 100
     SIMPLE_HISTORY_FILEFIELD_TO_CHARFIELD = True
-
     LANGUAGE_CODE = "en-US"
     TIME_ZONE = "UTC"
     USE_I18N = True
@@ -90,7 +89,6 @@ class Base(Configuration):
         "django.contrib.sessions",
         "django.contrib.messages",
         "django.contrib.staticfiles",
-        "django.contrib.sites",
         # third party
         "rest_framework",
         "rest_framework.authtoken",
@@ -107,6 +105,7 @@ class Base(Configuration):
         "health_check.db",
         "health_check.storage",
         # apps
+        "protobuf_crud",
     ]
 
     MIDDLEWARE = [
